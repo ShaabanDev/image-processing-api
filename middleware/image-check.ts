@@ -1,5 +1,6 @@
 import { Response, Request, NextFunction } from 'express';
 import fs from 'fs';
+import { HttpError } from '../models/http-error';
 const imageCheck = async (req: Request, res: Response, next: NextFunction) => {
   const fileName: string = req.query.filename as string;
   const width = req.query.width as unknown as number;
@@ -14,14 +15,22 @@ const imageCheck = async (req: Request, res: Response, next: NextFunction) => {
     );
 
     if (fs.existsSync(dir) && imageExistOnThumb) {
-      throw new Error(
-        'Image Already Exist on Thumbnails Folder, Please try Another image or Another Sizes.'
+      return next(
+        new HttpError(
+          'Image Already Exist on Thumbnails Folder, Please try Another image or Another Sizes.',
+          500
+        )
       );
     } else {
       return next();
     }
   } else {
-    throw new Error('Image does not Exist on disk, Please try Another image.');
+    return next(
+      new HttpError(
+        'Image does not Exist on disk, Please try Another image.',
+        400
+      )
+    );
   }
 };
 

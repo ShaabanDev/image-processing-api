@@ -1,27 +1,12 @@
-import express from 'express';
-import sharp from 'sharp';
-import fs from 'fs';
-import imageCheck from '../middleware/image-check';
-const app = express();
+import express, { Application } from 'express';
+import imageRouter from '../routes/image-routes';
 
-const port = 3000;
+const app: Application = express();
 
-app.get('/api/images', imageCheck, async (req, res) => {
-  const fileName = req.query.filename;
-  const width = req.query.width as unknown as number;
-  const height = req.query.width as unknown as number;
+const port: Number = 3000;
 
-  const dir = './assets/thumb';
-  if (!fs.existsSync(dir)) {
-    fs.mkdirSync(dir, {
-      recursive: true
-    });
-  }
+app.use(imageRouter);
 
-  await sharp(`assets/full/${fileName}.jpg`)
-    .resize({ width: +width, height: +height })
-    .toFile(`assets/thumb/${fileName}-${width}x${height}.jpg`);
-  res.send('hello');
+app.listen(port, () => {
+  console.log(`Server is running on port ${port}`);
 });
-
-app.listen(port);

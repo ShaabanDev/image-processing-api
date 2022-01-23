@@ -1,6 +1,6 @@
-import { check, query } from 'express-validator';
+import { query, ValidationChain } from 'express-validator';
 
-const queryValidator = () => [
+const queryValidator = (): ValidationChain[] => [
   query('filename').exists().withMessage('image name is required.'),
   query('width')
     .exists()

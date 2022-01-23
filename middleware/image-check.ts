@@ -1,7 +1,11 @@
 import { Response, Request, NextFunction } from 'express';
 import fs from 'fs';
 import { HttpError } from '../models/http-error';
-const imageCheck = async (req: Request, res: Response, next: NextFunction) => {
+const imageCheck = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+): Promise<void> => {
   const fileName: string = req.query.filename as string;
   const width = req.query.width as unknown as number;
   const height = req.query.height as unknown as number;

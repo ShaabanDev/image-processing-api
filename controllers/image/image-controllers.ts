@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import sharp from 'sharp';
 import fs from 'fs';
 
-const resizeFun = async (req: Request, res: Response) => {
+const resizeFun = async (req: Request, res: Response): Promise<void> => {
   const fileName = req.query.filename;
   const width = req.query.width as unknown as number;
   const height = req.query.height as unknown as number;

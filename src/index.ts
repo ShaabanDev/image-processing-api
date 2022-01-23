@@ -1,4 +1,4 @@
-import express, { Application, NextFunction, Response, Request } from 'express';
+import express, { Application, Response, Request } from 'express';
 import { HttpError } from '../models/http-error';
 import imageRouter from '../routes/image-routes';
 const app: Application = express();
@@ -7,7 +7,7 @@ const port = 3000;
 
 app.use('/api/images', imageRouter);
 
-app.use((error: HttpError, req: Request, res: Response, next: NextFunction) => {
+app.use((error: HttpError, req: Request, res: Response) => {
   res.status(error.status || 500);
   res.json({
     code: error.status || 400,

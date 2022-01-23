@@ -3,7 +3,7 @@ import { HttpError } from '../models/http-error';
 import imageRouter from '../routes/image-routes';
 const app: Application = express();
 
-const port: Number = 3000;
+const port = 3000;
 
 app.use('/api/images', imageRouter);
 
@@ -18,3 +18,5 @@ app.use((error: HttpError, req: Request, res: Response, next: NextFunction) => {
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
+
+export default app;

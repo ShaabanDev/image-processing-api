@@ -15,7 +15,7 @@ const resizeFun = async (req: Request, res: Response) => {
   }
   console.log(width, height);
   await sharp(`assets/full/${fileName}.jpg`)
-    .resize({ width: +width, height: +height })
+    .resize({ width, height, fit: 'cover' })
     .toFile(`assets/thumb/${fileName}-${width}x${height}.jpg`);
 
   res.status(200).sendFile(`${fileName}-${width}x${height}.jpg`, {

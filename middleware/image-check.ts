@@ -14,16 +14,12 @@ const imageCheck = async (
   const imageExistOnFull = fs.existsSync(`${dir}/${fileName}.jpg`);
   if (imageExistOnFull) {
     dir = './assets/thumb';
-    const imageExistOnThumb = fs.existsSync(
-      `${dir}/${fileName}-${width}x${height}.jpg`
-    );
+    const imagePath = `${dir}/${fileName}-${width}x${height}.jpg`;
+    const imageExistOnThumb = fs.existsSync(imagePath);
     if (imageExistOnThumb) {
-      return next(
-        new HttpError(
-          'Image Already Exist on Thumbnails Folder, Please try Another image or Another Sizes.',
-          400
-        )
-      );
+      return res.status(200).sendFile(imagePath, {
+        root: './'
+      });
     } else {
       return next();
     }

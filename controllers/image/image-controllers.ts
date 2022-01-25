@@ -1,23 +1,21 @@
-import { Request, Response } from 'express';
-import sharp from 'sharp';
-import fs from 'fs';
+import { NextFunction, Request, Response } from 'express';
+import resizeImage from '../../loaders/sharp-fun';
+import { HttpError } from '../../models/http-error';
 
-const resizeFun = async (req: Request, res: Response): Promise<void> => {
-  const fileName = req.query.filename;
+const resizeFun = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+): Promise<void> => {
+  const fileName: string = req.query.filename as string;
   const width = req.query.width as unknown as number;
   const height = req.query.height as unknown as number;
-
-  const dir = './assets/thumb';
-  if (!fs.existsSync(dir)) {
-    fs.mkdirSync(dir, {
-      recursive: true
-    });
+  const validResizing: boolean = await resizeImage(fileName, width, height);
+  if (!validResizing) {
+    return next(
+      new HttpError('something wrong occurred, please try again later', 500)
+    );
   }
-  console.log(width, height);
-  await sharp(`assets/full/${fileName}.jpg`)
-    .resize({ width, height, fit: 'cover' })
-    .toFile(`assets/thumb/${fileName}-${width}x${height}.jpg`);
-
   res.status(200).sendFile(`${fileName}-${width}x${height}.jpg`, {
     root: 'assets/thumb/'
   });

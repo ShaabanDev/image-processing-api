@@ -1,4 +1,4 @@
-import { query, ValidationChain } from 'express-validator'
+import { query, ValidationChain } from 'express-validator';
 
 const queryValidator = (): ValidationChain[] => [
   query('filename').exists().withMessage('image name is required.'),
@@ -14,6 +14,6 @@ const queryValidator = (): ValidationChain[] => [
     .toInt()
     .isInt({ max: 1000 })
     .withMessage('max height is 1000.')
-]
+];
 
-export default queryValidator
+export default queryValidator;

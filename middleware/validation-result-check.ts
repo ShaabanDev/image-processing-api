@@ -1,16 +1,16 @@
-import { Request, Response, NextFunction } from 'express';
-import { validationResult } from 'express-validator';
-import { HttpError } from '../models/http-error';
+import { Request, Response, NextFunction } from 'express'
+import { validationResult } from 'express-validator'
+import { HttpError } from '../models/http-error'
 const checkValidationResult = (
   req: Request,
   res: Response,
   next: NextFunction
 ): void => {
-  const errors = validationResult(req);
+  const errors = validationResult(req)
   if (!errors.isEmpty()) {
-    return next(new HttpError(errors.array()[0].msg, 401));
+    return next(new HttpError(errors.array()[0].msg, 401))
   }
-  return next();
-};
+  return next()
+}
 
-export default checkValidationResult;
+export default checkValidationResult

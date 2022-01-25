@@ -1,10 +1,10 @@
-import { Router } from 'express';
-import resizeFun from '../controllers/image/image-controllers';
-import imageCheck from '../middleware/image-check';
-import queryValidator from '../middleware/image-query-validator';
-import checkValidationResult from '../middleware/validation-result-check';
+import { Router } from 'express'
+import resizeFun from '../controllers/image/image-controllers'
+import imageCheck from '../middleware/image-check'
+import queryValidator from '../middleware/image-query-validator'
+import checkValidationResult from '../middleware/validation-result-check'
 
-const imageRouter = Router();
+const imageRouter = Router()
 
 imageRouter.get(
   '/resize',
@@ -12,6 +12,6 @@ imageRouter.get(
   checkValidationResult,
   imageCheck,
   resizeFun
-);
+)
 
-export default imageRouter;
+export default imageRouter
